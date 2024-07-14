@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
-
 const MainPage = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -12,11 +11,14 @@ const MainPage = () => {
 
   useEffect(() => {
     async function getBooks() {
-      const response = await fetch('https://openlibrary.org/subjects/fiction.json?limit=100');
+      const response = await fetch('/api/userhome'); // endpoint that handles book fetching and filtering
       const data = await response.json();
-      const booksData = data.works;
-      setBooks(booksData);
-      setFilteredBooks(booksData);
+      if (data.success) {
+        setBooks(data.data);
+        setFilteredBooks(data.data);
+      } else {
+        console.error('Error fetching books:', data.message);
+      }
     }
     getBooks();
   }, []);
@@ -91,6 +93,7 @@ const MainPage = () => {
                   <p style={{ color: '#718096', marginBottom: '0.5rem' }}>{book.subjects?.join(', ')}</p>
                   <a href={`https://openlibrary.org${book.key}`} target="_blank" rel="noopener noreferrer" style={{ color: '#0288d1', textDecoration: 'underline', marginBottom: '0.5rem', display: 'block' }}>More Info</a>
                   <button style={{ marginTop: '0.75rem', backgroundColor: '#0288d1', color: 'white', padding: '0.5rem', borderRadius: '0.25rem', transition: 'background-color 0.2s' }}>
+                    Add to cart
                   </button>
                 </div>
               ))
