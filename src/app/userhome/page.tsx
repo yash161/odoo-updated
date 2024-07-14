@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
@@ -128,9 +129,11 @@ const MainPage = () => {
                   <p className="text-gray-600 mb-2">{book.first_publish_year}</p>
                   <p className="text-gray-600 mb-2">{book.subjects?.join(', ')}</p>
                   <a href={`https://openlibrary.org${book.key}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline block mb-2">More Info</a>
-                  <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200 focus:outline-none">
-                    Add to cart
-                  </button>
+                  <Link href='/cart'>
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200 focus:outline-none">
+                      Add to cart
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))
