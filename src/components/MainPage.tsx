@@ -1,7 +1,6 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
-
 
 const MainPage = () => {
   const [books, setBooks] = useState([]);
@@ -34,71 +33,78 @@ const MainPage = () => {
   const displayedBooks = filteredBooks.slice(startIndex, startIndex + pageSize);
 
   return (
-    <div style={{ background: 'linear-gradient(to right, #00695c, #00796b, #00897b)', minHeight: '100vh', display: 'flex', flexDirection: 'column', color: 'white' }}>
-      <main style={{ container: 'mx-auto', flexGrow: 1, padding: '1rem' }}>
-        <section style={{ marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '1.5rem', textAlign: 'center' }}>Library Books</h2>
-          <div style={{ display: 'flex', marginBottom: '1.5rem', justifyContent: 'center' }}>
+    <div className="bg-gradient-to-r from-teal-600 to-teal-700 min-h-screen flex flex-col text-white">
+      <main className="container mx-auto flex-grow py-8 px-4">
+        <section className="mb-8">
+          <h2 className="text-3xl font-bold mb-6 text-center">Library Books</h2>
+          <div className="flex mb-6 justify-center">
             <input
               type="text"
               placeholder="Search for books"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ flexGrow: 1, padding: '0.5rem', border: '1px solid', borderRadius: '0.25rem 0 0 0.25rem', boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)', outline: 'none' }}
+              className="flex-grow py-2 px-4 border rounded-l-md shadow-sm focus:outline-none"
             />
-            <button style={{ backgroundColor: '#0288d1', color: 'white', padding: '0.5rem', borderRadius: '0 0.25rem 0.25rem 0', transition: 'background-color 0.2s', boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}>
+            <button className="bg-blue-500 text-white py-2 px-4 rounded-r-md shadow-sm hover:bg-blue-600 transition duration-200 focus:outline-none">
               Search
             </button>
           </div>
-          <div style={{ display: 'flex', marginBottom: '1.5rem', justifyContent: 'center', alignItems: 'center' }}>
-            <label style={{ marginRight: '0.5rem' }}>Books per page:</label>
+          <div className="flex mb-6 justify-center items-center space-x-4">
+            <label className="mr-2">Books per page:</label>
             <input
               type="number"
               value={pageSize}
               onChange={(e) => setPageSize(Number(e.target.value))}
-              style={{ padding: '0.5rem', border: '1px solid', borderRadius: '0.25rem', boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)', outline: 'none' }}
+              className="py-2 px-4 border text-black rounded-md shadow-sm focus:outline-none"
               min="1"
             />
-            <FaFilter style={{ marginLeft: '0.5rem', fontSize: '1.25rem' }} />
+            <FaFilter className="text-gray-300" style={{ fontSize: '1.25rem' }} />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div className="flex justify-center mx-auto py-4 space-x-4">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              style={{ backgroundColor: '#0288d1', color: 'white', padding: '0.5rem', borderRadius: '0.25rem 0 0 0.25rem', transition: 'background-color 0.2s', boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 transition duration-200 focus:outline-none"
             >
               Previous
             </button>
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              style={{ backgroundColor: '#0288d1', color: 'white', padding: '0.5rem', borderRadius: '0 0.25rem 0.25rem 0', transition: 'background-color 0.2s', boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 transition duration-200 focus:outline-none"
             >
               Next
             </button>
           </div>
         </section>
-        <section style={{ marginBottom: '2rem' }}>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1.5rem', textAlign: 'center' }}>Books</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-            {displayedBooks.length > 0 ? (
-              displayedBooks.map((book, index) => (
-                <div key={index} style={{ backgroundColor: 'white', padding: '1rem', borderRadius: '0.5rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', transition: 'box-shadow 0.2s', color: 'black' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '0.5rem' }}>{book.title}</h4>
-                  <img src={`http://covers.openlibrary.org/b/id/${book.cover_id}-L.jpg`} alt={book.title} style={{ marginBottom: '0.5rem', width: '100px', height: '150px' }} />
-                  <p style={{ color: '#4a5568', marginBottom: '0.5rem' }}>{book.authors?.map(author => author.name).join(', ')}</p>
-                  <p style={{ color: '#718096', marginBottom: '0.5rem' }}>{book.first_publish_year}</p>
-                  <p style={{ color: '#718096', marginBottom: '0.5rem' }}>{book.subjects?.join(', ')}</p>
-                  <a href={`https://openlibrary.org${book.key}`} target="_blank" rel="noopener noreferrer" style={{ color: '#0288d1', textDecoration: 'underline', marginBottom: '0.5rem', display: 'block' }}>More Info</a>
-                  <button style={{ marginTop: '0.75rem', backgroundColor: '#0288d1', color: 'white', padding: '0.5rem', borderRadius: '0.25rem', transition: 'background-color 0.2s' }}>
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {displayedBooks.length > 0 ? (
+            displayedBooks.map((book, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition duration-200 hover:shadow-lg">
+                <img
+                  src={`http://covers.openlibrary.org/b/id/${book.cover_id}-L.jpg`}
+                  alt={book.title}
+                  className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/mark.jpg'; // Replace with your default image URL
+                  }}
+                />
+                <div className="p-4">
+                  <h4 className="text-xl font-semibold mb-2">{book.title}</h4>
+                  <p className="text-gray-700 mb-2">{book.authors?.map(author => author.name).join(', ')}</p>
+                  <p className="text-gray-600 mb-2">{book.first_publish_year}</p>
+                  <p className="text-gray-600 mb-2">{book.subjects?.join(', ')}</p>
+                  <a href={`https://openlibrary.org${book.key}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline block mb-2">More Info</a>
+                  <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200 focus:outline-none">
                     Add to cart
                   </button>
                 </div>
-              ))
-            ) : (
-              <p style={{ textAlign: 'center', width: '100%' }}>No books found.</p>
-            )}
-          </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-white">No books found.</p>
+          )}
         </section>
       </main>
     </div>
