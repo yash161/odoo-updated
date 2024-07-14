@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
 
-const HomePage = () => {
+const MainPage = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,4 +105,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default MainPage;
