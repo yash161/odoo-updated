@@ -36,6 +36,7 @@ export async function POST(request : NextRequest){
             })
         }
         user.isVerify = true
+        user.verifyCode = ''
 
         await user.save()
         return NextResponse.json({
